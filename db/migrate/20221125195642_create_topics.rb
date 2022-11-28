@@ -5,7 +5,8 @@ class CreateTopics < ActiveRecord::Migration[6.1]
       t.integer :user_id
       t.timestamp :created_at
       t.timestamp :edited_at
-      t.integer :open
+      t.boolean :open
+      t.integer :winner_idea
     end
   end
 end
