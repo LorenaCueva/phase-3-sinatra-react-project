@@ -9,7 +9,7 @@ class Topic < ActiveRecord::Base
 
     def closed_on
         if !open
-            edited_at
+            updated_at
         end 
     end
 
@@ -20,4 +20,6 @@ class Topic < ActiveRecord::Base
     def author
         self.user.name
     end
+
+    
 end
