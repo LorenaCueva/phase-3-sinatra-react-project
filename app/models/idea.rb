@@ -13,4 +13,16 @@ class Idea < ActiveRecord::Base
         arr
     end
 
+    def author
+        self.user.name
+    end
+
+    def liked?
+        likes_count > 0
+    end
+
+    def topic_name
+        self.topic.title
+    end
+
 end
