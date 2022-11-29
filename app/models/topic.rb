@@ -16,4 +16,8 @@ class Topic < ActiveRecord::Base
     def winner
         Idea.find(winner_idea).body
     end
+
+    def author
+        self.user.name
+    end
 end
