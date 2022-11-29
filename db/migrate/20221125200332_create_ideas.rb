@@ -5,7 +5,7 @@ class CreateIdeas < ActiveRecord::Migration[6.1]
       t.integer :user_id
       t.string :body
       t.timestamp :created_at
-      t.timestamp :edited_at
+      t.timestamp :updated_at
     end
   end
 end
