@@ -21,7 +21,7 @@ class Idea < ActiveRecord::Base
         likes_count > 0
     end
 
-    def topic_name
+    def topic_title
         self.topic.title
     end
 
