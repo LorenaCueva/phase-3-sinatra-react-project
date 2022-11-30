@@ -3,7 +3,6 @@ class User < ActiveRecord::Base
     has_many :ideas
     has_many :likes, through: :ideas
 
-    def auth(email)
-        self.email == email
-    end
+    validates_uniqueness_of :name, scope: :email
+
 end
