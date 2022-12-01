@@ -32,7 +32,10 @@ class TopicsController < Sinatra::Base
     
     patch "/topic/:id" do
           topic = Topic.find(params[:id])
-          topic.update(params)
+          topic.update(
+            title: params[:title],
+            open: params[:open]
+            )
           topic.to_json
     end
     
@@ -42,7 +45,7 @@ class TopicsController < Sinatra::Base
           user_id: params[:user_id],
           open: true
         )
-        topic.to_json
+        format_to_json(topic, "open")
     end
     
     delete "/topic/:id" do
@@ -51,13 +54,13 @@ class TopicsController < Sinatra::Base
         topic.to_json
     end
 
-    
+
     private
 
     def format_to_json(topics, type="")
         if type == "open"
             topics.to_json(
-                only: [:id , :title, :created_at, :updated_at], 
+                only: [:id , :title, :created_at, :updated_at, :open, :user_id], 
                 include: 
                     {ideas: {only: [:id, :body, :created_at, :updated_at], 
                             :methods => [:author, :likes_count, :liked_by]}},
