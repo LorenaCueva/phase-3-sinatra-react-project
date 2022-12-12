@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2022_11_25_201209) do
     t.integer "user_id"
     t.string "body"
     t.datetime "created_at"
-    t.datetime "edited_at"
+    t.datetime "updated_at"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -29,13 +29,14 @@ ActiveRecord::Schema.define(version: 2022_11_25_201209) do
     t.string "title"
     t.integer "user_id"
     t.datetime "created_at"
-    t.datetime "edited_at"
-    t.integer "open"
+    t.datetime "updated_at"
+    t.boolean "open"
+    t.integer "winner_idea"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.string "email"
+    t.string "password"
   end
 
 end
