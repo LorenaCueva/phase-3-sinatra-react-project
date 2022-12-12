@@ -3,8 +3,6 @@ class Idea < ActiveRecord::Base
     belongs_to :user
     has_many :likes, :dependent => :destroy
 
-    # const liked_by_current_user? = false;
-
     def likes_count
         self.likes.count
     end
@@ -14,14 +12,6 @@ class Idea < ActiveRecord::Base
         self.likes.each {|i| res << i.user_id}
         res
     end
-
-    # def liked_by_user?(user)
-    #     liked_by_current_user? = liked_by.include?(user)
-    # end
-
-    # def li?
-    #     liked_by_current_user
-    # end
 
     def author
         self.user.name

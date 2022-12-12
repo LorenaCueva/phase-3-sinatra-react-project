@@ -3,31 +3,38 @@ class TopicsController < Sinatra::Base
     get "/topics" do
         topics = Topic.all.order(created_at: :desc)
         format_to_json(topics)
-      end
+    end
     
     get "/topics/open" do
         topics = Topic.where("open = ?", true).order(created_at: :desc)
-        format_to_json(topics, "open")
-    end
-    
-    get "/topics/open/:user_id" do
-        topics = Topic.where("user_id = ? AND open = ?",  params[:user_id], true)
-        format_to_json(topics, "open")
+        format_to_json(topics, "open2")
     end
     
     get "/topics/closed" do
-        topics = Topic.where("open = ?", false).order(created_at: :desc)
-        format_to_json(topics, "closed")
-    end
-    
-    get "/topics/closed/:user_id" do
-        topics = Topic.where("user_id = ? AND open = ?", params[:user_id], false).order(updated_at: :desc)
+        topics = Topic.where("open = ?", false).order(updated_at: :desc)
         format_to_json(topics, "closed")
     end
 
     get "/topic/:id" do
         topics = Topic.where("id = ?", params[:id])
         format_to_json(topics)
+    end
+
+    get "/topic/:id/close" do
+        topic = Topic.find(params[:id])
+        topic.to_json(only: [:id],
+                    include: {
+                    ideas: {only: [:id, :user_id],
+                            :methods => [:author, :likes_count]}})
+    end
+
+    patch "/topic/:id/close" do
+        topic = Topic.find(params[:id])
+        topic.update(
+            open: false,
+            winner_idea: params[:winner_idea]
+        )
+        format_to_json(topic, "closed")
     end
     
     patch "/topic/:id" do
@@ -47,7 +54,7 @@ class TopicsController < Sinatra::Base
         )
         format_to_json(topic, "open")
     end
-    
+   
     delete "/topic/:id" do
         topic = Topic.find(params[:id])
         topic.destroy
@@ -68,15 +75,17 @@ class TopicsController < Sinatra::Base
             )
         elsif type == "closed"
             topics.to_json(
-                only: [:id , :title, :created_at], 
-                :methods => [:closed_on, :ideas_count, :winner, :author]
+                only: [:id , :title, :created_at, :user_id],
+                :methods => [:closed_on , :ideas_count, :winner, :author, :winner_likes, :winner_author]
                 )
+        elsif type == "open2"
+                topics.to_json(only: [:id, :created_at, :title, :user_id], :methods => [:ideas_count, :author])
+    
         elsif type == ""
             topics.to_json(
                 only: [:id , :title, :created_at, :updated_at], 
                 include: 
-                    {ideas: {except: [:user_id], 
-                            :methods => [:author, :likes_count, :liked_by]}}, 
+                    {ideas: {:methods => [:author, :likes_count, :liked_by]}}, 
                 :methods => [:author, :ideas_count]
             )
         end

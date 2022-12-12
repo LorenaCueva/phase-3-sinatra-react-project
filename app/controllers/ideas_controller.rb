@@ -9,6 +9,11 @@ class IdeasController < Sinatra::Base
         end
         format_to_json(res)
     end
+
+    get "/ideas/user/:user_id" do
+        ideas = Idea.where("user_id = ?" , params[:user_id]).order(created_at: :desc)
+        format_to_json(ideas)
+    end
     
     get "/ideas/:topic_id" do
         ideas = Idea.where("topic_id = ?", params[:topic_id]).order(created_at: :desc)
@@ -67,6 +72,5 @@ class IdeasController < Sinatra::Base
     def format_to_json(ideas)
         ideas.to_json(:methods => [:author, :topic_title, :likes_count, :liked_by])
     end
-
 
 end

@@ -8,9 +8,7 @@ class Topic < ActiveRecord::Base
     end
 
     def closed_on
-        if !open
-            updated_at
-        end 
+        self.updated_at
     end
 
     def winner
@@ -19,6 +17,14 @@ class Topic < ActiveRecord::Base
 
     def author
         self.user.name
+    end
+
+    def winner_author
+        Idea.find(winner_idea).author
+    end
+
+    def winner_likes
+        Idea.find(winner_idea).likes_count
     end
 
     
