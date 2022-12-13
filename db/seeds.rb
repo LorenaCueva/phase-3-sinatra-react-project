@@ -18,16 +18,20 @@ end
 puts "Creating topics..."
 
 20.times do |i|
-    Topic.create(title: "Topic# #{i}", user_id: Faker::Number.between(from: 1, to: 24), open: true)
+    Topic.create(title: "Topic# #{i}", user_id: Faker::Number.between(from: 1, to: 2), open: true)
 end
 
 20.times do |i|
-    Topic.create(title: "Topic# #{i + 20}", user_id: Faker::Number.between(from: 1, to: 4), open: true)
+    Topic.create(title: "Topic# #{i + 21}", user_id: Faker::Number.between(from: 1, to: 24), open: true)
 end
 
 20.times do |i|
-    Topic.create(title: "Topic# #{i + 40}", user_id: Faker::Number.between(from: 1, to: 24), open: false, winner_idea: Faker::Number.between(from: 1, to: 100) )
+    Topic.create(title: "Topic# #{i + 41}", user_id: Faker::Number.between(from: 1, to: 2), open: false, winner_idea: Faker::Number.between(from: 1, to: 100))
 end
+
+
+puts "Creating winner ideas..."
+
 
 t1 = Topic.create(title: "Places to hide bone", user_id: 1, open: true)
 
@@ -56,30 +60,40 @@ end
 
 puts "Creating ideas..."
 
-100.times do |x|
-    Idea.create(body: "Idea# #{x}", user_id: Faker::Number.between(from: 1, to: 4), topic_id: Faker::Number.between(from: 1, to: 40))
+20.times do |x|
+    Idea.create(body: "Idea# #{x}", user_id: Faker::Number.between(from: 1, to: 24), topic_id: x + 41)
+end
+
+60.times do |x|
+    Idea.create(body: "Idea# #{x + 21}", user_id: Faker::Number.between(from: 1, to: 2), topic_id: x + 1)
 end
 
 100.times do |x|
-    Idea.create(body: "Idea# #{x}", user_id: Faker::Number.between(from: 1, to: 24), topic_id: Faker::Number.between(from: 1, to: 40))
+    Idea.create(body: "Idea# #{x + 81}", user_id: Faker::Number.between(from: 1, to: 4), topic_id: Faker::Number.between(from: 1, to: 40))
+end
+
+100.times do |x|
+    Idea.create(body: "Idea# #{x + 181}", user_id: Faker::Number.between(from: 1, to: 24), topic_id: Faker::Number.between(from: 41, to: 60))
 end
 
 
 puts "Creating likes..."
 
+20.times do |i|
+    Like.create(idea_id: i + 10, user_id: Faker::Number.between(from: 1, to: 24) )
+end
 
-100.times do |i|
-    Like.create(idea_id: Faker::Number.between(from: 40, to: 60), user_id: Faker::Number.between(from: 1, to: 4) )
+30.times do |i|
+    Like.create(idea_id: i + 31, user_id: Faker::Number.between(from: 1, to: 24) )
 end
 
 100.times do |i|
-    Like.create(idea_id: Faker::Number.between(from: 1, to: 100), user_id: Faker::Number.between(from: 1, to: 4) )
+    Like.create(idea_id: Faker::Number.between(from: 41, to: 60), user_id: Faker::Number.between(from: 1, to: 4) )
 end
 
-100.times do |i|
-    Like.create(idea_id: Faker::Number.between(from: 100, to: 200), user_id: Faker::Number.between(from: 1, to: 24) )
+400.times do |i|
+    Like.create(idea_id: Faker::Number.between(from: 1, to: 280), user_id: Faker::Number.between(from: 1, to: 24) )
 end
 
-# Seed your database here
 
 puts "✅ Done seeding!"
