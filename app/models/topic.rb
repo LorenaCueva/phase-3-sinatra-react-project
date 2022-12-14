@@ -3,6 +3,10 @@ class Topic < ActiveRecord::Base
     has_many :ideas, :dependent => :destroy
     has_many :likes, through: :ideas
 
+    def author
+        self.user.name
+    end
+
     def ideas_count
        self.ideas.count
     end
@@ -15,10 +19,6 @@ class Topic < ActiveRecord::Base
         Idea.find(winner_idea).body
     end
 
-    def author
-        self.user.name
-    end
-
     def winner_author
         Idea.find(winner_idea).author
     end
@@ -26,6 +26,5 @@ class Topic < ActiveRecord::Base
     def winner_likes
         Idea.find(winner_idea).likes_count
     end
-
     
 end

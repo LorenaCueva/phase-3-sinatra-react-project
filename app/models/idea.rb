@@ -25,4 +25,8 @@ class Idea < ActiveRecord::Base
         self.topic.title
     end
 
+    def isOpen?
+        self.topic.open
+    end
+
 end

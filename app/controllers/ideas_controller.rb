@@ -11,8 +11,14 @@ class IdeasController < Sinatra::Base
     end
 
     get "/ideas/user/:user_id" do
+        res = []
         ideas = Idea.where("user_id = ?" , params[:user_id]).order(created_at: :desc)
-        format_to_json(ideas)
+        ideas.each do |idea| 
+            if idea.isOpen? 
+                res << idea
+            end 
+        end
+        format_to_json(res)
     end
     
     get "/ideas/:topic_id" do
